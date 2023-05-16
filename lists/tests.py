@@ -22,3 +22,21 @@ class HomePageTest(TestCase):
         expected_html = render_to_string('home.html')
         self.assertEqual(response.content.decode(), expected_html)
 
+    def test_home_page_can_save_a_POST_request(self):
+        """测试 home_page 函数能否处理 POST 表单请求"""
+        # 设置配置，前置条件
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['item_text'] = 'A new list item'
+
+        # 执行代码
+        response = home_page(request)
+
+        # 编写断言
+        self.assertIn('A new list item', response.content.decode())
+        expected_html = render_to_string(
+            'home.html',
+            {'new_item_text': 'A new list item'}
+        )
+        self.assertEqual(response.content.decode(), expected_html)
+
