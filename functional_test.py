@@ -40,9 +40,10 @@ class NewVisitorTest(unittest.TestCase):
         # 代表事项表格中显示了"1: Buy peacock feathers"
         input_box.send_keys(Keys.ENTER)
         table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_element(By.TAG_NAME, 'tr')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "没有添加待办事项在表格中"
         )
 
         self.fail("Finish the test!")
